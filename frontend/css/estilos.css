@@ -1,0 +1,119 @@
+/* Importar fuente moderna desde Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+/* Estilos Generales */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #fdfdfd;
+    color: #333;
+}
+
+/* Navbar (Cabecera) */
+.navbar {
+    background: linear-gradient(135deg, #1a1a1a 0%, #333333 100%);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.navbar-brand {
+    font-weight: 600;
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+}
+
+/* Catálogo de Productos (Tarjetas) */
+#catalogo {
+    margin-top: 20px;
+}
+
+.card-producto {
+    border: none;
+    border-radius: 12px;
+    overflow: hidden; /* Para que la imagen respete los bordes redondeados */
+    box-shadow: 0 6px 15px rgba(0,0,0,0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-producto:hover {
+    transform: translateY(-5px); /* Pequeño salto al pasar el ratón */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+}
+
+.card-img-top {
+    height: 300px !important;
+    width: 100% !important;
+    object-fit: contain !important;
+    background-color: #f8f9fa !important; /* Fondo gris clarito elegante */
+    padding: 20px !important; /* Espacio alrededor para que no toque los bordes */
+}
+
+.card-body-producto {
+    padding: 20px;
+}
+
+.card-title {
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.card-text {
+    font-size: 0.9rem;
+    color: #777;
+    margin-bottom: 15px;
+    height: 40px; /* Altura fija para la descripción */
+    overflow: hidden; /* Recorta descripciones muy largas */
+}
+
+.precio {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+/* Carrito de Compras (Columna derecha) */
+.card-carrito {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.06);
+    position: sticky; /* Se queda fija al hacer scroll */
+    top: 20px;
+}
+
+.card-title-carrito {
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+#lista-carrito .list-group-item {
+    border-left: none;
+    border-right: none;
+    padding: 15px 0;
+    font-size: 0.9rem;
+}
+
+#total-carrito-container {
+    font-size: 1.2rem;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 2px solid #eee;
+}
+
+/* Botones */
+.btn-primary {
+    background-color: #1a1a1a;
+    border-color: #1a1a1a;
+    border-radius: 25px; /* Bordes redondeados */
+    padding: 8px 20px;
+    font-weight: 400;
+}
+
+.btn-primary:hover {
+    background-color: #333;
+    border-color: #333;
+}
+
+.btn-success {
+    border-radius: 25px;
+    padding: 12px;
+    font-weight: 600;
+}
