@@ -57,34 +57,106 @@ function agregarAlCarrito(id) {
     actualizarVistaCarrito();
 }
 
-// 4. Pintar el carrito actualizado
 function actualizarVistaCarrito() {
     const lista = document.getElementById('lista-carrito');
     const totalElemento = document.getElementById('total-carrito');
-
+    
     lista.innerHTML = '';
     let total = 0;
 
     carrito.forEach(p => {
-        // Calculamos el subtotal de ese producto (precio * cantidad)
         const subtotal = p.precio * p.cantidad;
         total += subtotal;
-
-        // Renderizamos el HTML del producto en el carrito
+        
         lista.innerHTML += `
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <div class="d-flex align-items-center">
-                    <img src="${p.urlImagen}" alt="${p.nombre}"
+                    <img src="${p.urlImagen}" alt="${p.nombre}" 
                          style="width: 50px; height: 50px; object-fit: contain; margin-right: 15px; border-radius: 8px; background-color: #f8f9fa; padding: 2px; border: 1px solid #eee;">
                     <div>
                         <span class="d-block">${p.nombre}</span>
                         <span class="badge bg-dark rounded-pill">x${p.cantidad}</span>
                     </div>
                 </div>
-                <span class="fw-bold text-primary">${subtotal.toFixed(2)} €</span>
+                <div class="d-flex align-items-center">
+                    <span class="fw-bold text-primary me-3">${subtotal.toFixed(2)} €</span>
+                    
+                    <button class="btn btn-sm btn-outline-secondary me-1" onclick="restarCantidad(${p.id})">-</button>
+                    <button class="btn btn-sm btn-outline-danger" onclick="eliminarProducto(${p.id})">🗑️</button>
+                </div>
             </li>
         `;
     });
 
     totalElemento.innerText = total.toFixed(2) + ' €';
+}
+
+// Función para restar 1 a la cantidad
+function restarCantidad(id) {
+    const producto = carrito.find(p => p.id === id);
+    if (producto) {
+        if (producto.cantidad > 1) {
+            producto.cantidad--; // Le restamos 1
+        } else {
+            eliminarProducto(id); // Si solo queda 1 y le damos a restar, lo borramos del todo
+        }
+        actualizarVistaCarrito(); // Refrescamos la vista
+    }
+}
+
+// Función para eliminar el producto del carrito completamente
+function eliminarProducto(id) {
+    // Sobrescribimos el carrito con todos los productos MENOS el que queremos borrar
+    carrito = carrito.filter(p => p.id !== id);
+    actualizarVistaCarrito(); // Refrescamos la vista
+}
+
+// ==========================================
+// NUEVA FUNCIONALIDAD A8: Lógica del Buscador
+// ==========================================
+document.getElementById('buscador-productos').addEventListener('input', function(e) {
+    // 1. Guardamos lo que el usuario está escribiendo y lo pasamos a minúsculas
+    const textoBuscado = e.target.value.toLowerCase();
+
+    // 2. Seleccionamos todas las tarjetas de productos de la pantalla
+    const tarjetasProductos = document.querySelectorAll('.card');
+
+    // 3. Recorremos cada tarjeta para ver si coincide con la búsqueda
+    tarjetasProductos.forEach(tarjeta => {
+        // Buscamos el título del producto dentro de la tarjeta
+        const titulo = tarjeta.querySelector('.card-title') ? tarjeta.querySelector('.card-title').innerText.toLowerCase() : '';
+
+        // Si el título incluye lo que hemos escrito, mostramos la tarjeta, si no, la ocultamos
+        if (titulo.includes(textoBuscado)) {
+            tarjeta.parentElement.style.display = 'block'; // Mostrar
+        } else {
+            tarjeta.parentElement.style.display = 'none';  // Ocultar
+        }
+    });
+});
+
+// ==========================================
+// NUEVA FUNCIONALIDAD A8: Procesar Pago
+// ==========================================
+function procesarPago() {
+    // 1. Comprobamos que haya algo en el carrito
+    if (carrito.length === 0) {
+        alert("¡Tu carrito está vacío! Añade alguna prenda antes de pagar.");
+        return;
+    }
+
+    // 2. Simulamos el pago con éxito
+    alert("✅ ¡Pago realizado con éxito! Tu pedido de Marca Ropa IDG está en camino.");
+
+    // 3. Vaciamos el carrito (lo dejamos como un array vacío)
+    carrito = [];
+    actualizarVistaCarrito(); // Refrescamos la vista para que salga a 0€
+
+    // 4. Cerramos el modal (la ventanita emergente)
+    const modalElement = document.getElementById('checkoutModal');
+    const modalInstance = bootstrap.Modal.getInstance(modalElement);
+    modalInstance.hide();
+
+    // 5. Limpiamos el formulario para la próxima vez
+    document.getElementById('formulario-pago').reset();
 }

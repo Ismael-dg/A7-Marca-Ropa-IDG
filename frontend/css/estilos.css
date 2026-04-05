@@ -117,3 +117,23 @@ body {
     padding: 12px;
     font-weight: 600;
 }
+
+/* Espaciado para la sección del total y el botón */
+#total-carrito {
+    margin-bottom: 15px !important;
+    display: block;
+}
+
+.card-body .btn-success {
+    margin-top: 10px !important;
+    padding: 12px !important;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Para que la tarjeta del carrito no se vea tan comprimida */
+.sticky-top .card {
+    border-radius: 15px;
+    overflow: hidden;
+}
