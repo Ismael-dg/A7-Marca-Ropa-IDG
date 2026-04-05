@@ -67,3 +67,9 @@ Para que el proyecto funcione, debes levantar ambos entornos (Backend y Frontend
 
 **Vista del Navegador:**
 ![Vista del Navegador](docs/navegador.png)
+
+**Interfaz de Finalizar Pago (Checkout):**
+![Formulario de pago](docs/finalizar_pago.png)
+
+**Vista General del Navegador:**
+![Vista del Navegador](docs/navegador.png)
