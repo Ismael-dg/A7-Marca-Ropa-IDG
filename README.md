@@ -1,7 +1,7 @@
-# 1. 👕 Marca Ropa IDG - Prototipo Funcional (A7)
+# 1. 👕 Marca Ropa IDG - Prototipo Funcional (A8)
 
 ## 2. Descripción breve
-Este proyecto es el Prototipo Funcional Mínimo (MVP) para la tienda online **Marca Ropa IDG**. Consiste en un catálogo web interactivo con arquitectura desacoplada (Frontend y Backend separados), que consume datos en tiempo real desde una base de datos relacional mediante una API REST.
+Este proyecto es el Prototipo Funcional Medio para la tienda online **Marca Ropa IDG**. Consiste en un catálogo web interactivo con arquitectura desacoplada (Frontend y Backend separados), que consume datos en tiempo real desde una base de datos relacional mediante una API REST.
 
 ## 3. Tecnologías utilizadas
 * **Backend:** Java 21, Spring Boot (Spring Web, Spring Data JPA), Maven.
@@ -39,17 +39,17 @@ Para que el proyecto funcione, debes levantar ambos entornos (Backend y Frontend
 3. El navegador se abrirá automáticamente (normalmente en el puerto `5500`) mostrando la tienda conectada a la base de datos.
 
 ## 7. Funcionalidades implementadas
-* ✅ **Arquitectura desacoplada:** Separación total entre cliente (JS) y servidor (Java).
-* ✅ **Catálogo dinámico:** Carga de productos (imágenes, precios, títulos) directamente desde MySQL.
-* ✅ **Carrito de compras:** Funcionalidad para agregar y quitar productos.
-* ✅ **Cálculo de precios:** Subtotales y total del carrito actualizados en tiempo real.
-* ✅ **CORS configurado:** API preparada para recibir peticiones seguras desde el frontend.
+* ⚙️ **Arquitectura desacoplada:** Separación total entre cliente (JS) y servidor (Java).
+* 🖼️ **Catálogo dinámico:** Carga de productos (imágenes, precios, títulos) directamente desde MySQL.
+* 🔐 **CORS configurado:** API preparada para recibir peticiones seguras desde el frontend.
+* 🔍 **Buscador en tiempo real:** Filtrado dinámico de productos en el catálogo mediante JS sin recargar la página.
+* 🛍️ **Gestión avanzada del carrito:** Funcionalidad para agregar productos, modificar cantidades (sumar y restar) y eliminar artículos, actualizando el total al instante.
+* 💳 **Sistema de Pago (Checkout):** Ventana emergente (modal) para simular la confirmación del pedido, procesar datos de envío y vaciar el carrito tras el pago.
 
-## 8. Funcionalidades pendientes
-* ⏳ **Pasarela de pago:** Integración de un sistema de simulación de pago para finalizar la compra.
-* ⏳ **Sistema de Usuarios:** Registro y login de clientes.
-* ⏳ **Panel de Administrador:** Interfaz para añadir, editar o borrar productos de la base de datos sin usar phpMyAdmin.
-* ⏳ **Diseño Responsivo avanzado:** Mejorar la adaptación del diseño a pantallas de móviles muy pequeñas.
+## 8. Funcionalidades pendientes (A9)
+* 📦 **Historial de pedidos:** Vincular los carritos finalizados con la base de datos de MySQL.
+* 👤 **Sistema de Usuarios:** Registro y login de clientes.
+* 🛠️ **Panel de Administrador (Backoffice):** Interfaz para añadir, editar o borrar productos de la base de datos sin usar phpMyAdmin.
 
 ## 9. Autor
 * **Nombre:** Ismael Delgado García
