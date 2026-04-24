@@ -136,7 +136,7 @@ document.getElementById('buscador-productos').addEventListener('input', function
 });
 
 // ==========================================
-// NUEVA FUNCIONALIDAD A8: Procesar Pago
+// App.js - Lógica principal del Frontend (Versión A9)
 // ==========================================
 async function procesarPago() {
     if (carrito.length === 0) { alert("El carrito está vacío"); return; }
