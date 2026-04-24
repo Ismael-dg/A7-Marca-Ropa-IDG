@@ -1,4 +1,4 @@
-# 1. 👕 Marca Ropa IDG - Prototipo Funcional (A8)
+# 1. 👕 Marca Ropa IDG - Sistema Casi Completo (A9)
 
 ## 2. Descripción breve
 Este proyecto es el Prototipo Funcional Medio para la tienda online **Marca Ropa IDG**. Consiste en un catálogo web interactivo con arquitectura desacoplada (Frontend y Backend separados), que consume datos en tiempo real desde una base de datos relacional mediante una API REST.
