@@ -46,10 +46,8 @@ Para que el proyecto funcione, debes levantar ambos entornos (Backend y Frontend
 * 🛍️ **Gestión avanzada del carrito:** Funcionalidad para agregar productos, modificar cantidades (sumar y restar) y eliminar artículos, actualizando el total al instante.
 * 💳 **Sistema de Pago (Checkout):** Ventana emergente (modal) para simular la confirmación del pedido, procesar datos de envío y vaciar el carrito tras el pago.
 
-## 8. Funcionalidades pendientes (A9)
-* 📦 **Historial de pedidos:** Vincular los carritos finalizados con la base de datos de MySQL.
-* 👤 **Sistema de Usuarios:** Registro y login de clientes.
-* 🛠️ **Panel de Administrador (Backoffice):** Interfaz para añadir, editar o borrar productos de la base de datos sin usar phpMyAdmin.
+## 8. Problemas conocidos: Bugs menores
+* En pantallas de móviles muy pequeñas, los botones del carrito (+ y -) pueden solaparse ligeramente.
 
 ## 9. Autor
 * **Nombre:** Ismael Delgado García
