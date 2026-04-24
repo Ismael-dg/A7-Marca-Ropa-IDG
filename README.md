@@ -38,7 +38,12 @@ Para que el proyecto funcione, debes levantar ambos entornos (Backend y Frontend
 2. Haz clic derecho sobre el archivo `index.html` y selecciona **"Open with Live Server"**.
 3. El navegador se abrirá automáticamente (normalmente en el puerto `5500`) mostrando la tienda conectada a la base de datos.
 
-## 7. Funcionalidades implementadas
+## 7. Configuración necesaria
+* **Puerto del Backend:** `8080`
+* **Puerto del Frontend:** `5500` (con Live Server)
+* **Credenciales de prueba BBDD:** root / (sin contraseña)
+
+## 8. Funcionalidades implementadas
 * ⚙️ **Arquitectura desacoplada:** Separación total entre cliente (JS) y servidor (Java).
 * 🖼️ **Catálogo dinámico:** Carga de productos (imágenes, precios, títulos) directamente desde MySQL.
 * 🔐 **CORS configurado:** API preparada para recibir peticiones seguras desde el frontend.
@@ -46,10 +51,10 @@ Para que el proyecto funcione, debes levantar ambos entornos (Backend y Frontend
 * 🛍️ **Gestión avanzada del carrito:** Funcionalidad para agregar productos, modificar cantidades (sumar y restar) y eliminar artículos, actualizando el total al instante.
 * 💳 **Sistema de Pago (Checkout):** Ventana emergente (modal) para simular la confirmación del pedido, procesar datos de envío y vaciar el carrito tras el pago.
 
-## 8. Problemas conocidos: Bugs menores
+## 9. Problemas conocidos: Bugs menores
 * En pantallas de móviles muy pequeñas, los botones del carrito (+ y -) pueden solaparse ligeramente.
 
-## 9. Autor
+## 10. Autor
 * **Nombre:** Ismael Delgado García
 * **Curso:** 2º DAM
 
