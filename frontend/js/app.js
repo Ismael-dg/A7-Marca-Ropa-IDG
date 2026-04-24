@@ -138,25 +138,23 @@ document.getElementById('buscador-productos').addEventListener('input', function
 // ==========================================
 // NUEVA FUNCIONALIDAD A8: Procesar Pago
 // ==========================================
-function procesarPago() {
-    // 1. Comprobamos que haya algo en el carrito
-    if (carrito.length === 0) {
-        alert("¡Tu carrito está vacío! Añade alguna prenda antes de pagar.");
-        return;
-    }
-
-    // 2. Simulamos el pago con éxito
-    alert("✅ ¡Pago realizado con éxito! Tu pedido de Marca Ropa IDG está en camino.");
-
-    // 3. Vaciamos el carrito (lo dejamos como un array vacío)
-    carrito = [];
-    actualizarVistaCarrito(); // Refrescamos la vista para que salga a 0€
-
-    // 4. Cerramos el modal (la ventanita emergente)
-    const modalElement = document.getElementById('checkoutModal');
-    const modalInstance = bootstrap.Modal.getInstance(modalElement);
-    modalInstance.hide();
-
-    // 5. Limpiamos el formulario para la próxima vez
-    document.getElementById('formulario-pago').reset();
+async function procesarPago() {
+    if (carrito.length === 0) { alert("El carrito está vacío"); return; }
+    const datosPedido = {
+        nombreCliente: document.getElementById('nombre').value,
+        direccionEnvio: document.getElementById('direccion').value,
+        total: parseFloat(document.getElementById('total-carrito').innerText)
+    };
+    try {
+        const respuesta = await fetch('http://localhost:8080/api/pedidos', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(datosPedido)
+        });
+        if (respuesta.ok) {
+            alert("✅ ¡Pedido guardado en la base de datos! Gracias por tu compra.");
+            carrito = []; actualizarVistaCarrito();
+            bootstrap.Modal.getInstance(document.getElementById('checkoutModal')).hide();
+        }
+    } catch (error) { console.error(error); alert("Error al procesar el pago."); }
 }
