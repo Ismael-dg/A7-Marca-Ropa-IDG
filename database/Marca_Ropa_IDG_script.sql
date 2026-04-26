@@ -84,6 +84,15 @@ CREATE TABLE DETALLE_CARRITO (
         ON DELETE RESTRICT ON UPDATE CASCADE
 ) COMMENT='Detalle de productos dentro de un carrito';
 
+-- Tabla PEDIDO: pedidos a realizar por clientes
+CREATE TABLE pedidos (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    nombreCliente VARCHAR(255),
+    direccionEnvio VARCHAR(255),
+    total DOUBLE,
+    fechaPedido DATETIME
+);
+
 -- Tabla PEDIDO: pedidos realizados por clientes
 CREATE TABLE PEDIDO (
     id_pedido INT AUTO_INCREMENT PRIMARY KEY, 
