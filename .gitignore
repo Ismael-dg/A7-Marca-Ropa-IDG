@@ -31,3 +31,9 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Ignorar archivos locales de IntelliJ y compilación
+.idea/
+*.iml
+target/
+HELP.md
