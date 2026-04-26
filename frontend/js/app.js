@@ -139,22 +139,46 @@ document.getElementById('buscador-productos').addEventListener('input', function
 // App.js - Lógica principal del Frontend (Versión A9)
 // ==========================================
 async function procesarPago() {
-    if (carrito.length === 0) { alert("El carrito está vacío"); return; }
+    console.log("Iniciando procesamiento de pago..."); // Chivato para la consola
+
+    if (carrito.length === 0) {
+        alert("El carrito está vacío");
+        return;
+    }
+
+    // Limpiamos el texto del total por si tiene el símbolo € o espacios
+    let textoTotal = document.getElementById('total-carrito').innerText;
+    let totalLimpio = parseFloat(textoTotal.replace('€', '').trim());
+
     const datosPedido = {
         nombreCliente: document.getElementById('nombre').value,
         direccionEnvio: document.getElementById('direccion').value,
-        total: parseFloat(document.getElementById('total-carrito').innerText)
+        total: totalLimpio
     };
+
     try {
         const respuesta = await fetch('http://localhost:8080/api/pedidos', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(datosPedido)
         });
+
         if (respuesta.ok) {
             alert("✅ ¡Pedido guardado en la base de datos! Gracias por tu compra.");
-            carrito = []; actualizarVistaCarrito();
-            bootstrap.Modal.getInstance(document.getElementById('checkoutModal')).hide();
+            carrito = [];
+            actualizarVistaCarrito();
+
+            // Cerramos el modal de Bootstrap
+            let modalEl = document.getElementById('checkoutModal');
+            let modalObj = bootstrap.Modal.getInstance(modalEl);
+            if (modalObj) {
+                modalObj.hide();
+            }
+        } else {
+            alert("❌ Error del servidor: No se pudo guardar el pedido.");
         }
-    } catch (error) { console.error(error); alert("Error al procesar el pago."); }
+    } catch (error) {
+        console.error("Error en la petición Fetch:", error);
+        alert("Error de conexión al procesar el pago. ¿Está encendido el Backend?");
+    }
 }
