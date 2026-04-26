@@ -1,78 +1,76 @@
-# 1. 👕 Marca Ropa IDG - Sistema Casi Completo (A9)
+# 🛒 Marca Ropa IDG - Sistema Casi Completo (Hito A9)
 
-## 2. Descripción breve
-Este proyecto es el Prototipo Funcional Medio para la tienda online **Marca Ropa IDG**. Consiste en un catálogo web interactivo con arquitectura desacoplada (Frontend y Backend separados), que consume datos en tiempo real desde una base de datos relacional mediante una API REST.
+## 1. Descripción del proyecto
+Este proyecto es el desarrollo de una tienda online funcional para la marca **IDG**. Se trata de una aplicación web con arquitectura desacoplada que permite la gestión de un catálogo de ropa en tiempo real, administración de carrito de compras y persistencia de pedidos en una base de datos relacional. El sistema está implementado al 80%, cumpliendo con los requisitos core de negocio.
 
-## 3. Tecnologías utilizadas
-* **Backend:** Java 21, Spring Boot (Spring Web, Spring Data JPA), Maven.
-* **Base de Datos:** MySQL.
-* **Frontend:** HTML5, CSS, JavaScript, Bootstrap 5.
-* **Herramientas/IDE:** IntelliJ IDEA, Visual Studio Code, XAMPP (phpMyAdmin).
+## 2. Tecnologías utilizadas
+* **Backend:** Java 21 (OpenJDK), Spring Boot 3.2.x, Spring Data JPA, Maven 3.9.x.
+* **Base de Datos:** MySQL 8.0.x (vía XAMPP).
+* **Frontend:** HTML5, CSS3, JavaScript (ES6+), Bootstrap 5.3.x.
+* **Entorno:** IntelliJ IDEA 2023.x / VS Code, Git/GitHub.
 
-## 4. Requisitos previos
-Para poder ejecutar este proyecto en tu entorno local, necesitas tener instalado:
-* **Java Development Kit (JDK):** Versión 17 o superior (Recomendado JDK 21).
-* **XAMPP:** Para los servicios de servidor Apache y base de datos MySQL.
-* **Visual Studio Code:** Con la extensión **Live Server** instalada.
-* **IntelliJ IDEA** (o Eclipse): Para ejecutar el backend.
+## 3. Requisitos previos
+Para ejecutar el proyecto es necesario tener instalado:
+* **JDK 21** o superior.
+* **XAMPP** (con módulos Apache y MySQL).
+* **Navegador web** actualizado (Chrome/Firefox).
+* **VS Code** con la extensión **Live Server**.
 
-## 5. Instrucciones de instalación
-1. **Clonar el repositorio:** Descarga o clona este proyecto en tu ordenador.
-2. **Configurar la Base de Datos:**
-    * Abre XAMPP e inicia los módulos de **Apache** y **MySQL**.
-    * Ve a `http://localhost/phpmyadmin`.
-    * Importa el archivo `tienda.sql` ubicado en la carpeta `/database/`. Esto creará la base de datos `Marca_Ropa_IDG` automáticamente.
-3. **Instalar dependencias del Backend:**
-    * Abre la carpeta `/backend` del proyecto con IntelliJ IDEA.
-    * Maven detectará automáticamente el archivo `pom.xml` y descargará todas las librerías necesarias de Spring Boot.
+## 4. Instrucciones de instalación paso a paso
+1. **Clonación:** `git clone https://github.com/tu-usuario/tu-repositorio.git`
+2. **Base de Datos:** - Abrir XAMPP e iniciar MySQL.
+   - Acceder a `http://localhost/phpmyadmin`.
+   - Crear una base de datos llamada `Marca_Ropa_IDG`.
+   - Importar el archivo `database/tienda.sql`.
+3. **Backend:** Abrir la carpeta `/backend` en IntelliJ IDEA y dejar que Maven descargue las dependencias (archivo `pom.xml`).
+4. **Frontend:** Abrir la carpeta `/frontend` en VS Code.
 
-## 6. Instrucciones de ejecución
-Para que el proyecto funcione, debes levantar ambos entornos (Backend y Frontend):
+## 5. Instrucciones de ejecución
+1. **Iniciar Servidor (Backend):** Ejecutar la clase `TiendaRopaApplication.java` desde IntelliJ. El servidor arrancará por defecto en el puerto 8080.
+2. **Iniciar Web (Frontend):** Abrir `index.html` con **Live Server**.
 
-**Paso 1: Arrancar el Servidor (Backend)**
-1. En IntelliJ IDEA, navega hasta `src/main/java/.../TiendaRopaApplication.java`.
-2. Ejecuta la clase (Run). El servidor de datos se iniciará en `http://localhost:8080`.
+## 6. Configuración necesaria
+* **Puertos:** - Backend: `8080`
+   - Frontend: `5500` (puerto por defecto de Live Server).
+* **Variables de entorno:** Configurado en `src/main/resources/application.properties` para conectar con el puerto `3306` de MySQL.
+* **Credenciales de prueba:**
+   - Base de Datos: Usuario `root` | Contraseña: `` (vacío).
 
-**Paso 2: Arrancar la Web (Frontend)**
-1. Abre la carpeta `/frontend` en Visual Studio Code.
-2. Haz clic derecho sobre el archivo `index.html` y selecciona **"Open with Live Server"**.
-3. El navegador se abrirá automáticamente (normalmente en el puerto `5500`) mostrando la tienda conectada a la base de datos.
+## 7. Funcionalidades implementadas
+* ✅ **Catálogo dinámico:** Carga de productos desde MySQL con imágenes y precios.
+* ✅ **Buscador interactivo:** Filtrado de productos en el Frontend sin recarga de página mediante JS.
+* ✅ **Gestión de Carrito:** Añadir, restar unidades y eliminar productos con recalculo de precios en tiempo real.
+* ✅ **Sistema de Checkout:** Formulario modal para recoger datos de envío y pago.
+* ✅ **Historial de Pedidos:** Persistencia real de las compras en la tabla `pedidos` de MySQL al finalizar la transacción.
+* ✅ **Arquitectura REST:** Comunicación asíncrona mediante `fetch()` y JSON.
 
-## 7. Configuración necesaria
-* **Puerto del Backend:** `8080`
-* **Puerto del Frontend:** `5500` (con Live Server)
-* **Credenciales de prueba BBDD:** root / (sin contraseña)
+## 8. Funcionalidades pendientes (Para el 100%)
+* ⏳ **Panel de Administración (Backoffice):** Interfaz para CRUD de productos desde la web.
+* ⏳ **Sistema de Usuarios:** Login y Registro con sesiones/JWT.
+* ⏳ **Gestión de Stock:** Descuento de unidades del inventario tras la compra.
 
-## 8. Funcionalidades implementadas
-* ⚙️ **Arquitectura desacoplada:** Separación total entre cliente (JS) y servidor (Java).
-* 🖼️ **Catálogo dinámico:** Carga de productos (imágenes, precios, títulos) directamente desde MySQL.
-* 🔐 **CORS configurado:** API preparada para recibir peticiones seguras desde el frontend.
-* 🔍 **Buscador en tiempo real:** Filtrado dinámico de productos en el catálogo mediante JS sin recargar la página.
-* 🛍️ **Gestión avanzada del carrito:** Funcionalidad para agregar productos, modificar cantidades (sumar y restar) y eliminar artículos, actualizando el total al instante.
-* 💳 **Sistema de Pago (Checkout):** Ventana emergente (modal) para simular la confirmación del pedido, procesar datos de envío y vaciar el carrito tras el pago.
+## 9. Problemas conocidos (Bugs menores)
+* ⚠️ **Responsive:** En resoluciones inferiores a 320px, los botones del carrito pueden solaparse ligeramente.
+* ⚠️ **Caché:** En ocasiones es necesario realizar un refresco forzado (`Ctrl+F5`) para visualizar cambios en los estilos CSS tras una actualización.
 
-## 9. Problemas conocidos: Bugs menores
-* En pantallas de móviles muy pequeñas, los botones del carrito (+ y -) pueden solaparse ligeramente.
+## 10. Capturas de pantalla
+**1. Catálogo General y Buscador:**
+![Catálogo](docs/buscador.png)
 
-## 10. Autor
+**2. Gestión de Carrito:**
+![Carrito](docs/carrito.png)
+
+**3. Formulario de Pago (Checkout):**
+![Checkout](docs/finalizar_pago.png)
+
+**4. Confirmación de Pedido con Éxito:**
+![Exito](docs/exito_pago.png)
+
+**5. Persistencia en Base de Datos (phpMyAdmin):**
+![BBDD](docs/phpmyadmin.png)
+
+## 11. Autor y contacto
 * **Nombre:** Ismael Delgado García
 * **Curso:** 2º DAM
-
----
-
-### 📸 Anexos: Vistas del Proyecto
-
-**Estructura del Proyecto en IntelliJ:**
-![Estructura de carpetas en IntelliJ](docs/intellij.png)
-
-**Base de Datos en phpMyAdmin:**
-![Interfaz de phpMyAdmin](docs/phpmyadmin.png)
-
-**Vista del Navegador:**
-![Vista del Navegador](docs/navegador.png)
-
-**Interfaz de Finalizar Pago (Checkout):**
-![Formulario de pago](docs/finalizar_pago.png)
-
-**Vista General del Buscador:**
-![Vista del Navegador](docs/buscador.png)
+* **Correo:** ismael.dg2005@gmail.com
+* **GitHub:** https://Ismael-dg@github.com
