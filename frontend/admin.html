@@ -2,48 +2,69 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Administración - Marca Ropa IDG</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- 🔒 SCRIPT DE SEGURIDAD -->
+    <script>
+        // Si intentas entrar aquí sin la llave (logeado = true), te mando al login
+        if (sessionStorage.getItem('logeado') !== 'true') {
+            window.location.href = 'login.html';
+        }
+
+        function cerrarSesion() {
+            sessionStorage.removeItem('logeado'); // Rompemos la llave
+            window.location.href = 'login.html';  // Te echamos al login
+        }
+    </script>
 </head>
 <body class="bg-light">
-<nav class="navbar navbar-dark bg-dark">
+
+<nav class="navbar navbar-dark bg-dark mb-4 shadow-sm">
     <div class="container">
         <span class="navbar-brand mb-0 h1">IDG Panel de Administrador</span>
-        <a href="index.html" class="btn btn-outline-light btn-sm">Volver a la Tienda</a>
+        <div class="d-flex gap-2">
+            <a href="index.html" class="btn btn-outline-light btn-sm">Volver a la Tienda</a>
+            <button onclick="cerrarSesion()" class="btn btn-danger btn-sm">Cerrar Sesión</button>
+        </div>
     </div>
 </nav>
 
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-md-4">
-            <div class="card shadow-sm">
-                <div class="card-header bg-primary text-white">Añadir Nuevo Producto</div>
+<div class="container">
+    <!-- SECCIÓN 1: PRODUCTOS -->
+    <div class="row mb-5">
+        <!-- Formulario para añadir -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-primary text-white fw-bold">Añadir Nuevo Producto</div>
                 <div class="card-body">
                     <form id="form-producto">
                         <div class="mb-3">
-                            <label>Nombre de la prenda</label>
+                            <label class="form-label">Nombre de la prenda</label>
                             <input type="text" id="admin-nombre" class="form-control" required>
                         </div>
                         <div class="mb-3">
-                            <label>Precio (€)</label>
+                            <label class="form-label">Precio (€)</label>
                             <input type="number" step="0.01" id="admin-precio" class="form-control" required>
                         </div>
                         <div class="mb-3">
-                            <label>URL de la imagen</label>
+                            <label class="form-label">URL de la imagen</label>
                             <input type="text" id="admin-imagen" class="form-control" placeholder="ej: imagenes/camiseta.png" required>
                         </div>
-                        <button type="submit" class="btn btn-primary w-100">Guardar Producto</button>
+                        <button type="submit" class="btn btn-primary w-100 fw-bold">Guardar Producto</button>
                     </form>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-8">
-            <div class="card shadow-sm">
-                <div class="card-header bg-dark text-white">Inventario Actual</div>
-                <div class="card-body">
-                    <table class="table table-striped align-middle">
-                        <thead>
+        <!-- Tabla de inventario -->
+        <div class="col-md-8 mb-4">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-header bg-dark text-white fw-bold">Inventario Actual</div>
+                <div class="card-body overflow-auto" style="max-height: 400px;">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-light">
                         <tr>
                             <th>ID</th>
                             <th>Imagen</th>
@@ -53,6 +74,32 @@
                         </tr>
                         </thead>
                         <tbody id="tabla-productos">
+                            <!-- El JS rellena esto -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECCIÓN 2: PEDIDOS -->
+    <div class="row pb-5">
+        <div class="col-12">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-success text-white fw-bold">Últimos Pedidos Recibidos</div>
+                <div class="card-body">
+                    <table class="table table-striped table-hover align-middle">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>ID Pedido</th>
+                                <th>Cliente</th>
+                                <th>Dirección</th>
+                                <th>Total Facturado</th>
+                                <th>Fecha</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-pedidos">
+                            <!-- El JS rellena esto -->
                         </tbody>
                     </table>
                 </div>
@@ -61,6 +108,9 @@
     </div>
 </div>
 
+<!-- LIBRERÍAS Y SCRIPTS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="js/admin.js"></script>
+
 </body>
 </html>

@@ -121,7 +121,12 @@ document.getElementById('buscador-productos').addEventListener('input', function
 // 5. Procesamiento de pago (Hito A9)
 async function procesarPago() {
     if (carrito.length === 0) {
-        alert("El carrito está vacío");
+        Swal.fire({
+            title: 'Carrito vacío',
+            text: 'Añade algún producto antes de finalizar la compra.',
+            icon: 'warning',
+            confirmButtonText: 'Vale'
+        });
         return;
     }
 
@@ -135,7 +140,12 @@ async function procesarPago() {
     };
 
     if (!datosPedido.nombreCliente || !datosPedido.direccionEnvio) {
-        alert("Por favor, rellena los datos de envío.");
+        Swal.fire({
+            title: 'Faltan datos',
+            text: 'Por favor, rellena tu nombre y dirección de envío.',
+            icon: 'warning',
+            confirmButtonText: 'Entendido'
+        });
         return;
     }
 
@@ -147,7 +157,13 @@ async function procesarPago() {
         });
 
         if (respuesta.ok) {
-            alert("✅ ¡Pedido guardado con éxito!");
+            Swal.fire({
+                title: '¡Pedido Confirmado!',
+                text: 'Gracias por tu compra en Marca Ropa IDG. Tu pedido está en camino.',
+                icon: 'success',
+                confirmButtonText: 'Genial'
+            });
+
             carrito = [];
             actualizarVistaCarrito();
 
@@ -156,10 +172,20 @@ async function procesarPago() {
             if (modalObj) modalObj.hide();
             document.getElementById('formulario-pago').reset();
         } else {
-            alert("❌ Error del servidor al guardar el pedido.");
+            Swal.fire({
+                title: 'Error',
+                text: 'Hubo un problema al guardar tu pedido en el servidor.',
+                icon: 'error',
+                confirmButtonText: 'Entendido'
+            });
         }
     } catch (error) {
         console.error("Error:", error);
-        alert("Error de conexión. ¿Está encendido el Backend?");
+        Swal.fire({
+            title: 'Error de conexión',
+            text: 'No se pudo conectar con el servidor. ¿Está encendido el Backend?',
+            icon: 'error',
+            confirmButtonText: 'Entendido'
+        });
     }
 }
