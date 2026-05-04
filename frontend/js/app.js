@@ -16,18 +16,19 @@ function renderizarCatalogo() {
     contenedor.innerHTML = '';
 
     productosCatalogo.forEach(p => {
-        // Obtenemos la URL de la imagen (p.urlImagen es el nombre exacto de tu Entidad Java)
-        const urlImagen = p.urlImagen;
+        // SINCRONIZACIÓN: Usamos p.imagen (nombre de la variable en Java)
+        // Si en tu Java pusiste @Column(name="url_imagen") private String imagen;
+        // el JSON que llega aquí tiene la propiedad "imagen".
+        const urlImagen = p.imagen;
 
         contenedor.innerHTML += `
             <div class="col-md-6 mb-4">
                 <div class="card card-producto h-100 shadow-sm">
-                    <img src="${urlImagen}" class="card-img-top" alt="${p.nombre}">
+                    <img src="${urlImagen}" class="card-img-top" alt="${p.nombre}" onerror="this.src='https://via.placeholder.com/150'">
                     <div class="card-body card-body-producto d-flex flex-column">
                         <h5 class="card-title">${p.nombre}</h5>
-                        <p class="card-text text-muted">${p.descripcion}</p>
                         <div class="d-flex justify-content-between align-items-center mt-auto">
-                            <span class="precio">${p.precio} €</span>
+                            <span class="precio">${p.precio.toFixed(2)} €</span>
                             <button onclick="agregarAlCarrito(${p.id})" class="btn btn-primary btn-sm">Añadir al carrito</button>
                         </div>
                     </div>
@@ -37,42 +38,37 @@ function renderizarCatalogo() {
     });
 }
 
-// 3. Lógica del carrito mejorada (con contador de cantidad)
+// 3. Lógica del carrito con contador
 function agregarAlCarrito(id) {
-    // Buscamos si el producto YA ESTÁ en el carrito
     const productoExistente = carrito.find(p => p.id === id);
 
     if (productoExistente) {
-        // Si ya está, solo le sumamos 1 a la cantidad
         productoExistente.cantidad++;
     } else {
-        // Si no está, lo buscamos en el catálogo
         const productoNuevo = productosCatalogo.find(p => p.id === id);
         if (productoNuevo) {
-            // Lo metemos en el carrito añadiéndole una propiedad "cantidad" que empieza en 1
             carrito.push({ ...productoNuevo, cantidad: 1 });
         }
     }
-
     actualizarVistaCarrito();
 }
 
 function actualizarVistaCarrito() {
     const lista = document.getElementById('lista-carrito');
     const totalElemento = document.getElementById('total-carrito');
-    
+
     lista.innerHTML = '';
     let total = 0;
 
     carrito.forEach(p => {
         const subtotal = p.precio * p.cantidad;
         total += subtotal;
-        
+
         lista.innerHTML += `
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <div class="d-flex align-items-center">
-                    <img src="${p.urlImagen}" alt="${p.nombre}" 
-                         style="width: 50px; height: 50px; object-fit: contain; margin-right: 15px; border-radius: 8px; background-color: #f8f9fa; padding: 2px; border: 1px solid #eee;">
+                    <img src="${p.imagen}" alt="${p.nombre}" 
+                         style="width: 50px; height: 50px; object-fit: contain; margin-right: 15px;">
                     <div>
                         <span class="d-block">${p.nombre}</span>
                         <span class="badge bg-dark rounded-pill">x${p.cantidad}</span>
@@ -80,7 +76,6 @@ function actualizarVistaCarrito() {
                 </div>
                 <div class="d-flex align-items-center">
                     <span class="fw-bold text-primary me-3">${subtotal.toFixed(2)} €</span>
-                    
                     <button class="btn btn-sm btn-outline-secondary me-1" onclick="restarCantidad(${p.id})">-</button>
                     <button class="btn btn-sm btn-outline-danger" onclick="eliminarProducto(${p.id})">🗑️</button>
                 </div>
@@ -91,62 +86,45 @@ function actualizarVistaCarrito() {
     totalElemento.innerText = total.toFixed(2) + ' €';
 }
 
-// Función para restar 1 a la cantidad
 function restarCantidad(id) {
     const producto = carrito.find(p => p.id === id);
     if (producto) {
         if (producto.cantidad > 1) {
-            producto.cantidad--; // Le restamos 1
+            producto.cantidad--;
         } else {
-            eliminarProducto(id); // Si solo queda 1 y le damos a restar, lo borramos del todo
+            eliminarProducto(id);
         }
-        actualizarVistaCarrito(); // Refrescamos la vista
+        actualizarVistaCarrito();
     }
 }
 
-// Función para eliminar el producto del carrito completamente
 function eliminarProducto(id) {
-    // Sobrescribimos el carrito con todos los productos MENOS el que queremos borrar
     carrito = carrito.filter(p => p.id !== id);
-    actualizarVistaCarrito(); // Refrescamos la vista
+    actualizarVistaCarrito();
 }
 
-// ==========================================
-// NUEVA FUNCIONALIDAD A8: Lógica del Buscador
-// ==========================================
+// 4. Lógica del Buscador
 document.getElementById('buscador-productos').addEventListener('input', function(e) {
-    // 1. Guardamos lo que el usuario está escribiendo y lo pasamos a minúsculas
     const textoBuscado = e.target.value.toLowerCase();
+    const tarjetasProductos = document.querySelectorAll('.card-producto');
 
-    // 2. Seleccionamos todas las tarjetas de productos de la pantalla
-    const tarjetasProductos = document.querySelectorAll('.card');
-
-    // 3. Recorremos cada tarjeta para ver si coincide con la búsqueda
     tarjetasProductos.forEach(tarjeta => {
-        // Buscamos el título del producto dentro de la tarjeta
-        const titulo = tarjeta.querySelector('.card-title') ? tarjeta.querySelector('.card-title').innerText.toLowerCase() : '';
-
-        // Si el título incluye lo que hemos escrito, mostramos la tarjeta, si no, la ocultamos
+        const titulo = tarjeta.querySelector('.card-title').innerText.toLowerCase();
         if (titulo.includes(textoBuscado)) {
-            tarjeta.parentElement.style.display = 'block'; // Mostrar
+            tarjeta.parentElement.style.display = 'block';
         } else {
-            tarjeta.parentElement.style.display = 'none';  // Ocultar
+            tarjeta.parentElement.style.display = 'none';
         }
     });
 });
 
-// ==========================================
-// App.js - Lógica principal del Frontend (Versión A9)
-// ==========================================
+// 5. Procesamiento de pago (Hito A9)
 async function procesarPago() {
-    console.log("Iniciando procesamiento de pago..."); // Chivato para la consola
-
     if (carrito.length === 0) {
         alert("El carrito está vacío");
         return;
     }
 
-    // Limpiamos el texto del total por si tiene el símbolo € o espacios
     let textoTotal = document.getElementById('total-carrito').innerText;
     let totalLimpio = parseFloat(textoTotal.replace('€', '').trim());
 
@@ -156,6 +134,11 @@ async function procesarPago() {
         total: totalLimpio
     };
 
+    if (!datosPedido.nombreCliente || !datosPedido.direccionEnvio) {
+        alert("Por favor, rellena los datos de envío.");
+        return;
+    }
+
     try {
         const respuesta = await fetch('http://localhost:8080/api/pedidos', {
             method: 'POST',
@@ -164,21 +147,19 @@ async function procesarPago() {
         });
 
         if (respuesta.ok) {
-            alert("✅ ¡Pedido guardado en la base de datos! Gracias por tu compra.");
+            alert("✅ ¡Pedido guardado con éxito!");
             carrito = [];
             actualizarVistaCarrito();
 
-            // Cerramos el modal de Bootstrap
             let modalEl = document.getElementById('checkoutModal');
             let modalObj = bootstrap.Modal.getInstance(modalEl);
-            if (modalObj) {
-                modalObj.hide();
-            }
+            if (modalObj) modalObj.hide();
+            document.getElementById('formulario-pago').reset();
         } else {
-            alert("❌ Error del servidor: No se pudo guardar el pedido.");
+            alert("❌ Error del servidor al guardar el pedido.");
         }
     } catch (error) {
-        console.error("Error en la petición Fetch:", error);
-        alert("Error de conexión al procesar el pago. ¿Está encendido el Backend?");
+        console.error("Error:", error);
+        alert("Error de conexión. ¿Está encendido el Backend?");
     }
 }
